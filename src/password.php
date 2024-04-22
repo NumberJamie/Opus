@@ -7,6 +7,7 @@
 
 class Password{
     private static int $min_strlen = 8;
+    private static int $similarity_threshold = 75;
     private static string $algo = PASSWORD_ARGON2ID;
     
     function verifyPassword(string $password, string $password_hash): bool {
@@ -16,17 +17,21 @@ class Password{
         return password_verify($password, $password_hash);
     }
     
-    function createPassword(string $password, array $errors = []): string | array {
+    function createPassword(string $username, string $password, array $errors = []): string | array {
+        similar_text($username, $password, $similairity);
         $password_lenght = strlen($password);
         if (self::$min_strlen >= $password_lenght){
             $errors[] = 'Password is too short, needs to be ' . self::$min_strlen . ' characters or longer.';
+        }
+        if ($similairity > self::$similarity_threshold){
+            $errors[] = 'Password cannot be similar to your other information.';
         }
         if ($errors) return $errors;
         return password_hash($password, self::$algo);
     }
 }
 
-$password = new Password();
+$password_class = new Password();
 ?>
 
 <form name="form" action="" method="post">
@@ -37,13 +42,10 @@ $password = new Password();
     <input type="submit" value="submit">
     <div class="errors">
         <?php
-            $username_test = 'username_test';
-            $password_test = 'password_test';
-            if (array_key_exists($password_test, $_POST)){
-                if (array_key_exists($username_test, $_POST)){
-                    echo levenshtein($username_test, $password_test);
-                }
-                $errors = $password->createPassword($_POST[$password_test]);
+            $username = 'username_test';
+            $password = 'password_test';
+            if (array_key_exists($password, $_POST) && array_key_exists($username, $_POST)){
+                $errors = $password_class->createPassword($_POST[$username], $_POST[$password]);
                 if (is_array($errors)){
                     foreach ($errors as $error){
                         echo '<p>' . $error . '</p>';
