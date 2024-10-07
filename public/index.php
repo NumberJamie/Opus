@@ -1,5 +1,6 @@
 <?php
 
+use source\Config;
 use source\Router;
 
 const BASE_DIR = __DIR__ . '/../';
@@ -8,6 +9,7 @@ spl_autoload_register(function ($class) {
     require BASE_DIR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 });
 
+$config = new Config();
 $router = new Router();
 
 require_once BASE_DIR . 'source/functions.php';

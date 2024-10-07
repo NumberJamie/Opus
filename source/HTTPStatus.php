@@ -19,7 +19,6 @@ final class HTTPStatus {
     const int RESET_CONTENT = 205;
     const int PARTIAL_CONTENT = 206;
 
-
     // 3xx redirection
     const int MOVED_PERMANENTLY = 301;
     const int NOT_MODIFIED = 304;
@@ -40,8 +39,7 @@ final class HTTPStatus {
     const int BAD_GATEWAY = 502;
     const int SERVICE_UNAVAILABLE = 503;
 
-
-    public static function valid_states(): array {
+    static function valid_states(): array {
         $reflection = new ReflectionClass(__CLASS__);
         return array_values($reflection->getConstants());
     }

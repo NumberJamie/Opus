@@ -39,7 +39,7 @@ class Router {
             $statusCode = HTTPStatus::METHOD_NOT_ALLOWED;
         }
         http_response_code($statusCode);
-        view("error", ['code' => $statusCode]);
+        view('error', ['code' => $statusCode]);
         die();
     }
 }
