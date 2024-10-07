@@ -12,11 +12,11 @@ class Container {
         $this->binds[$key] = $func;
     }
 
-    public static function set_container($container): void {
+    static function set($container): void {
         static::$container = $container;
     }
 
-    public static function get_container($key){
+    static function get($key){
         return static::$container->resolve($key);
     }
 
