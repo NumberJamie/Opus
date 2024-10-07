@@ -22,7 +22,7 @@ class Router {
     }
 
     function respond(string $path, string $method): void {
-        // TODO: clean the path string
+        $path = clean_path($path);
         if (!in_array($method, $this->availableMethods)){
             $this->abort(HTTPStatus::METHOD_NOT_ALLOWED);
         }
@@ -35,8 +35,11 @@ class Router {
     }
 
     function abort(int $statusCode = HTTPStatus::NOT_FOUND): void {
+        if (!in_array($statusCode, HTTPStatus::valid_states())) {
+            $statusCode = HTTPStatus::METHOD_NOT_ALLOWED;
+        }
         http_response_code($statusCode);
-        // TODO: require error php file
+        view("error", ['code' => $statusCode]);
         die();
     }
 }
