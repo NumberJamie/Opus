@@ -2,8 +2,6 @@
 
 namespace source;
 
-use function source\base_dir;
-
 class Config {
     private string $env;
     private array $variables = [];
