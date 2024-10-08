@@ -2,11 +2,14 @@
 
 namespace source;
 
+use function source\base_dir;
+
 class Config {
+    private string $env;
     private array $variables = [];
-    private string $env = BASE_DIR . '.env';
 
     function __construct() {
+        $this->env = base_dir('.env', '');
         $contents = file($this->env, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($contents as $line) {
             $this->variables += $this->create_pair($line);

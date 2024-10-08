@@ -28,7 +28,7 @@ class Router {
         }
         foreach ($this->routes as $route){
             if ($route['path'] != $path or $route['method'] != $method) continue;
-            require BASE_DIR . $route['controller'];
+            require base_dir($route['controller']);
             return;
         }
         $this->abort();
