@@ -11,3 +11,11 @@ You can run the project locally by specifying the `public` directory as the entr
 php.exe -t public -S localhost:8080
 ```
 Then the website should be available at: `http://localhost:8080`.
+
+## Aditional info:
+When using fleet, it is recommended to add this into your `.fleet/settings.json` file. To avoid the IDE trowing weird errors.
+```json
+{
+    "php.language.level": "8.3.4"
+}
+```
